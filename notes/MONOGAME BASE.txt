@@ -1,0 +1,18 @@
+MONOGAME BASE
+dotnet add package MonoGame.Framework.DesktopGL --version 3.8.5-develop.8
+
+GumUI
+dotnet add package Gum.MonoGame --version 2025.8.4.1
+MG Extended
+dotnet add package MonoGame.Extended --version 4.0.4
+
+
+todo:
+
+1
+- draw sprites for player
+- add player and movement of player
+
+2
+- add first map layer 
+- add first layer map collision

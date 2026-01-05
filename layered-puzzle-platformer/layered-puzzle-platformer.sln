@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35707.178 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "layered-puzzle-platformer", "layered-puzzle-platformer\layered-puzzle-platformer.csproj", "{2CE48780-7DBE-4BFE-BF00-D36025D55E37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JairLib", "JairLib\JairLib.csproj", "{A4E728F4-6005-4DCA-9586-10832EEBFE9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2CE48780-7DBE-4BFE-BF00-D36025D55E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE48780-7DBE-4BFE-BF00-D36025D55E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CE48780-7DBE-4BFE-BF00-D36025D55E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E728F4-6005-4DCA-9586-10832EEBFE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E728F4-6005-4DCA-9586-10832EEBFE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E728F4-6005-4DCA-9586-10832EEBFE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E728F4-6005-4DCA-9586-10832EEBFE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
