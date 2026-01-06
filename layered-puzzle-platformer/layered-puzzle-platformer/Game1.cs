@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JairLib;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,11 +9,13 @@ namespace layered_puzzle_platformer
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private PlayerPlatformer player;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Globals.GlobalContent = Content;
             IsMouseVisible = true;
         }
 
@@ -26,6 +29,8 @@ namespace layered_puzzle_platformer
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.Load();
+            player = new PlayerPlatformer();
 
             // TODO: use this.Content to load your game content here
         }
@@ -35,8 +40,9 @@ namespace layered_puzzle_platformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            Globals.Update(gameTime);
             // TODO: Add your update logic here
-
+            player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -45,6 +51,11 @@ namespace layered_puzzle_platformer
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+            player.Draw(_spriteBatch);
+
+            _spriteBatch.End(); 
 
             base.Draw(gameTime);
         }

@@ -4,16 +4,51 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Graphics;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Security;
 
 namespace JairLib;
 public class BasePlayer : AnyObject
 {
-    public static int PLAYER_TILESIZE_IN_WORLD = 32;
+    public static int PLAYER_TILESIZE_IN_WORLD = 128;
     public SpriteEffects flipper { get; set; }
     public Direction playerDirection { get; set; }
+    public PlayerState state { get; set; }
 
+    public void AnimatePlayerIdle(GameTime gameTime)
+    {
+
+        var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
+        //could make methods to handle animations in this sort of way
+        if (deltaTime < 500)
+        {
+            texture = Globals.playerPrototypeAtlas[0];
+            Debug.WriteLine($"{deltaTime}");
+        }
+        else
+        {
+            texture = Globals.playerPrototypeAtlas[1];
+            Debug.WriteLine($"{deltaTime}");
+        }
+    }
+
+
+    public void AnimatePlayerMoving(GameTime gameTime)
+    {
+        texture = Globals.playerPrototypeAtlas[0];
+
+        var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
+
+        if (deltaTime == 0)
+        {
+            state = PlayerState.Waiting;
+
+        }
+    }
+
+
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        spriteBatch.Draw(texture, rectangle, color);
+    }
 }
 
 public class PlayerPlatformer : BasePlayer
@@ -23,8 +58,7 @@ public class PlayerPlatformer : BasePlayer
     public PlayerPlatformer()
     {
         identifier = "player";
-        //texture = Globals.atlas[2 - '0'];
-        texture = Globals.gameObjectAtlas[1]; //blue
+        texture = Globals.playerPrototypeAtlas[0]; //blue
         rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
         color = Color.White;
         flipper = SpriteEffects.None;
@@ -56,7 +90,7 @@ public class PlayerPlatformer : BasePlayer
         {
             flipper = SpriteEffects.None;
             rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Left;
         }
         if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
@@ -64,7 +98,7 @@ public class PlayerPlatformer : BasePlayer
             flipper = SpriteEffects.FlipHorizontally;
             rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
             playerDirection = Direction.Right;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
     }
@@ -73,7 +107,6 @@ public class PlayerPlatformer : BasePlayer
 
 public class PlayerOverworld : BasePlayer
 {
-    public PlayerState state { get; set; }
     public int playerSpeed { get; set; }
     public Vector3 playerAltitude { get; set; }
 
@@ -81,7 +114,7 @@ public class PlayerOverworld : BasePlayer
     {
         identifier = "player";
         //texture = Globals.atlas[2 - '0'];
-        texture = Globals.gameObjectAtlas[1]; //blue
+        texture = Globals.playerPrototypeAtlas[1]; //blue
         rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
         color = Color.White;
         flipper = SpriteEffects.None;
@@ -107,7 +140,7 @@ public class PlayerOverworld : BasePlayer
 
     public void PlayerReset()
     {
-        texture = Globals.gameObjectAtlas[3]; //idk lol
+        texture = Globals.playerPrototypeAtlas[3]; //idk lol
 
         if (Globals.keyb.WasKeyPressed(Keys.R))
         {
@@ -130,7 +163,7 @@ public class PlayerOverworld : BasePlayer
             rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);            
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Left;
         }
         if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
@@ -140,7 +173,7 @@ public class PlayerOverworld : BasePlayer
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             playerDirection = Direction.Right;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
         if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
@@ -149,7 +182,7 @@ public class PlayerOverworld : BasePlayer
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             playerDirection = Direction.Up;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
         if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
@@ -157,7 +190,7 @@ public class PlayerOverworld : BasePlayer
             rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Down;
         }
         if (!Globals.keyb.WasAnyKeyJustDown() && state != PlayerState.Freefall)
@@ -167,7 +200,7 @@ public class PlayerOverworld : BasePlayer
 
         if (Globals.keyb.WasKeyPressed(Keys.Space))
         {
-            //texture = Globals.gameObjectAtlas[6]; //yellow
+            //texture = Globals.gameTilePrototypeAtlas[6]; //yellow
             playerAltitude = new Vector3(playerAltitude.X, playerAltitude.Y, playerAltitude.Z + 50);
             state = PlayerState.Freefall;
             return;
@@ -185,7 +218,7 @@ public class PlayerOverworld : BasePlayer
             rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);            
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Left;
         }
         else if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
@@ -195,7 +228,7 @@ public class PlayerOverworld : BasePlayer
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             playerDirection = Direction.Right;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
         else if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
@@ -204,7 +237,7 @@ public class PlayerOverworld : BasePlayer
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             playerDirection = Direction.Up;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
         else if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
@@ -212,7 +245,7 @@ public class PlayerOverworld : BasePlayer
             rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
-            //texture = Globals.gameObjectAtlas[1]; //blue
+            //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Down;
         }
         else if (!Globals.keyb.WasAnyKeyJustDown() && state != PlayerState.Freefall)
@@ -222,7 +255,7 @@ public class PlayerOverworld : BasePlayer
 
         if (Globals.keyb.WasKeyPressed(Keys.Space))
         {
-            //texture = Globals.gameObjectAtlas[6]; //yellow
+            //texture = Globals.gameTilePrototypeAtlas[6]; //yellow
             playerAltitude = new Vector3(playerAltitude.X, playerAltitude.Y, playerAltitude.Z + 50);
             state = PlayerState.Freefall;
             return;
@@ -230,62 +263,25 @@ public class PlayerOverworld : BasePlayer
         
     }
 
-    public void AnimatePlayerIdle(GameTime gameTime)
-    {
-
-        var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
-        //could make methods to handle animations in this sort of way
-        if (deltaTime < 500)
-        {
-            texture = Globals.gameObjectAtlas[11];
-            Debug.WriteLine($"{deltaTime}");
-        }
-        else
-        {
-            texture = Globals.gameObjectAtlas[10];
-            Debug.WriteLine($"{deltaTime}");
-        }
-    }
-
-
-    public void AnimatePlayerMoving(GameTime gameTime)
-    {
-        texture = Globals.atlas[12];
-
-        var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
-
-        if (deltaTime == 0)
-        {
-            state = PlayerState.Waiting;
-
-        }
-    }
-
     public void CheckStateForColor()
     {
         switch (state)
         {
             case PlayerState.Walking: 
-                texture = Globals.gameObjectAtlas[1]; //white
+                texture = Globals.playerPrototypeAtlas[1]; //white
                 break;
             case PlayerState.Jumping: 
-                texture = Globals.gameObjectAtlas[6]; //yellow
+                texture = Globals.playerPrototypeAtlas[6]; //yellow
                 break;
             case PlayerState.Freefall: 
-                texture = Globals.gameObjectAtlas[7]; //red
+                texture = Globals.playerPrototypeAtlas[7]; //red
                 break;
             case PlayerState.Waiting:
-                texture = Globals.gameObjectAtlas[8]; //orange
+                texture = Globals.playerPrototypeAtlas[8]; //orange
                 break;
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        
-        spriteBatch.Draw(texture, rectangle, color);
-
-    }
 
 
     //this is a bit much should probably refactor to offload tothe tilespaces 

@@ -49,7 +49,7 @@ namespace JairLib
             foreach (var obj in CurrentQuest.SideObjectives)
             {
                 obj.DrawNoCheck(_spriteBatch, player);
-                obj.texture = Globals.gameObjectAtlas[obj.textureValue];
+                obj.texture = Globals.gameTilePrototypeAtlas[obj.textureValue];
             }
 
             if (CurrentQuest.QuestComplete)
@@ -66,7 +66,7 @@ namespace JairLib
                 if (!objective.IsCompletedFlag)
                 {
                     objective.Draw(_spriteBatch);
-                    objective.texture = Globals.gameObjectAtlas[objective.textureValue];
+                    objective.texture = Globals.gameTilePrototypeAtlas[objective.textureValue];
                     return;
                 }
                 

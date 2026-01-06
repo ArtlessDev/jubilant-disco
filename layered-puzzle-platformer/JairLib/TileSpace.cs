@@ -16,7 +16,7 @@ namespace JairLib
         public TileSpace()
         {
             isCollidable = false;
-            texture = Globals.atlas[0];
+            texture = Globals.gameTilePrototypeAtlas[0];
             rectangle = new Rectangle();
             color = Color.White;
         }
@@ -29,7 +29,7 @@ namespace JairLib
 
             altitude = setAltitude();
             spaceType = setSpaceType();
-            texture = Globals.gameObjectAtlas[value];
+            texture = Globals.gameTilePrototypeAtlas[value];
             rectangle = new Rectangle();
             color = Color.White;
         }

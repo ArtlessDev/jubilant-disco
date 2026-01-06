@@ -16,10 +16,10 @@ namespace JairLib
 
         public static int mapWidth = 20;
         public static int mapHeight = 40;
-        public static int TileSize = 64;
+        public static int TileSize = 128;
 
-        public static Texture2D puzzleSet, gameObjectSet, pigskinSprite;
-        public static Texture2DAtlas atlas, gameObjectAtlas;
+        public static Texture2D gameTilePrototypeSet, playerPrototypeSet;
+        public static Texture2DAtlas gameTilePrototypeAtlas, playerPrototypeAtlas;
         public static int PUZZLE_SIZE = 25;
         public static int PUZZLE_SIZE_ADJUSTED = (int)(2 + Math.Sqrt(PUZZLE_SIZE)) * (int)(2 + Math.Sqrt(PUZZLE_SIZE));
         public static SpriteSheet spriteSheet, gameObjectSheet;
@@ -44,27 +44,20 @@ namespace JairLib
 
         public static void Load()
         {
-            //puzzleSet = GlobalContent.Load<Texture2D>("grayboxedMap_Sheet");
-            //atlas = Texture2DAtlas.Create("tileSpaceSet", puzzleSet, 32, 32);
-            //spriteSheet = new SpriteSheet("SpriteSheet/tileSpaceSetJSON", atlas);
+            gameTilePrototypeSet = GlobalContent.Load<Texture2D>("game_tileset_prototype");
+            gameTilePrototypeAtlas = Texture2DAtlas.Create("gameTileMapPrototype", gameTilePrototypeSet, TileSize, TileSize);
             
-            gameObjectSet = GlobalContent.Load<Texture2D>(".\\Sprites\\footballSprites");
-            gameObjectAtlas = Texture2DAtlas.Create("gameObjectSet", gameObjectSet, 64, 64);
-            gameObjectSheet = new SpriteSheet("SpriteSheet/gameObjectJSON", gameObjectAtlas);
+            playerPrototypeSet = GlobalContent.Load<Texture2D>("player_spritesheet");
+            playerPrototypeAtlas = Texture2DAtlas.Create("playerTileMapPrototype", playerPrototypeSet, TileSize, TileSize);
 
-            pigskinSprite = GlobalContent.Load<Texture2D>("./Sprites/pigskin");
-
-            font = GlobalContent.Load<SpriteFont>("File");
+            //font = GlobalContent.Load<SpriteFont>("File");
             tileSpaces = new List<TileSpace>();
-            //QuestSystem.SetFirstQuestAsCurrent();
         }
 
         public static void Update(GameTime gameTime)
         {
             KeyboardExtended.Update();
             keyb = KeyboardExtended.GetState();
-
-
             MouseExtended.Update();
             mouseState = MouseExtended.GetState();
         }
