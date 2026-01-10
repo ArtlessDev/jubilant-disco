@@ -31,7 +31,7 @@ namespace layered_puzzle_platformer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.Load();
             player = new PlayerPlatformer();
-
+            
             // TODO: use this.Content to load your game content here
         }
 

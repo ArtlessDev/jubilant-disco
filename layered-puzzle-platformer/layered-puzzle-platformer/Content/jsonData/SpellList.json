@@ -1,0 +1,28 @@
+{
+  "Spells": [
+    "Fuego":
+    {
+      "CastingSignature": [
+        "UP",
+        "UP",
+        "UP"
+      ]
+    },
+    "Hielo":
+    {
+      "CastingSignature": [
+        "UP",
+        "DOWN",
+        "UP"
+      ]
+    },
+    "Trueno":
+    {
+      "CastingSignature": [
+        "LEFT",
+        "RIGHT",
+        "LEFT"
+      ]
+    }
+  ]
+}
